@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Pınar Seninle Flörtleşir Miydi?</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f7d9e8;
+      padding-top: 80px;
+    }
+
+    h1 {
+      color: #b0005a;
+      font-size: 26px;
+    }
+
+    #soru {
+      font-size: 24px;
+      margin: 40px 20px;
+      font-weight: bold;
+    }
+
+    #mesaj {
+      font-size: 22px;
+      font-weight: bold;
+      color: #b0005a;
+      margin-top: 20px;
+    }
+
+    button {
+      font-size: 22px;
+      padding: 15px 35px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .evet {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .hayir {
+      background: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>PINAR SENİNLE FLÖRTLEŞİR MİYDİ?</h1>
+
+  <div id="soru">BEŞİKTAŞLI MISIN?</div>
+  <div id="mesaj"></div>
+
+  <button class="evet" onclick="cevapla('evet')">EVET</button>
+  <button class="hayir" onclick="cevapla('hayir')">HAYIR</button>
+
+  <script>
+
+    const sorular = [
+      "BEŞİKTAŞLI MISIN?",
+      "ANKARA İLE BAĞIN VAR MI?",
+      "SAYISALCI MISIN?",
+      "DERİ CEKETİN VAR MI?",
+      "KEDİLERİ SEVER MİSİN?"
+    ];
+
+    let soruIndex = 0;
+
+    function cevapla(cevap) {
+
+      const soruDiv = document.getElementById("soru");
+      const mesajDiv = document.getElementById("mesaj");
+      const butonlar = document.querySelectorAll("button");
+
+      if (cevap === "hayir") {
+
+        soruDiv.innerText = "HAYIR.";
+        mesajDiv.innerText = "OYUNA BAŞTAN BAŞLA";
+
+        butonlar.forEach(buton => {
+          buton.style.display = "none";
+        });
+
+      } else {
+
+        soruIndex++;
+
+        if (soruIndex === sorular.length) {
+
+          soruDiv.innerText = "EVET PINAR SENİNLE FLÖRTLEŞİR.";
+          mesajDiv.innerText = "";
+
+          butonlar.forEach(buton => {
+            buton.style.display = "none";
+          });
+
+        } else {
+
+          soruDiv.innerText = sorular[soruIndex];
+          mesajDiv.innerText = "";
+
+        }
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
