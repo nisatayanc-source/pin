@@ -2,103 +2,165 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pınar Seninle Flörtleşir Miydi?</title>
+
 <style>
 body{
     font-family:Arial,sans-serif;
     text-align:center;
-    background:#f7d9e8;
+    background:linear-gradient(135deg,#ffd1e8,#f7d9e8,#ffe6f2);
+    min-height:100vh;
     padding-top:80px;
+    overflow:hidden;
 }
+
 h1{
     color:#b0005a;
-    font-size:26px;
+    font-size:28px;
+    animation:parla 1.5s infinite alternate;
 }
+
+@keyframes parla{
+    from{transform:scale(1);}
+    to{transform:scale(1.05);}
+}
+
 #soru{
-    font-size:24px;
+    font-size:25px;
     margin:40px 20px;
     font-weight:bold;
+    color:#5c0030;
 }
-#mesaj{
-    font-size:22px;
-    font-weight:bold;
-    color:#b0005a;
-    margin-top:20px;
-}
+
 button{
     font-size:22px;
     padding:15px 35px;
     margin:10px;
     border:none;
-    border-radius:12px;
+    border-radius:16px;
     cursor:pointer;
+    transition:0.2s;
 }
+
+button:active{
+    transform:scale(1.15);
+}
+
 .evet{
     background:#4CAF50;
     color:white;
 }
+
 .hayir{
     background:#f44336;
     color:white;
 }
+
 #yenidenBasla{
     background:#b0005a;
     color:white;
     display:none;
 }
+
+.emoji{
+    position:fixed;
+    top:-40px;
+    font-size:28px;
+    animation:dus 2.5s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes dus{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
 </style>
 </head>
+
 <body>
+
 <h1>PINAR SENİNLE FLÖRTLEŞİR MİYDİ?</h1>
+
 <div id="soru">BEŞİKTAŞLI MISIN?</div>
-<div id="mesaj"></div>
+
 <button class="evet" onclick="cevapla('evet')">EVET</button>
 <button class="hayir" onclick="cevapla('hayir')">HAYIR</button>
+
 <br>
-<button id="yenidenBasla" onclick="yenidenBaslat()">
-OYUNA BAŞTAN BAŞLA
-</button>
+
+<button id="yenidenBasla" onclick="yenidenBaslat()">OYUNA BAŞTAN BAŞLA</button>
+
 <script>
-const sorular = [
+const sorular=[
 "BEŞİKTAŞLI MISIN?",
 "ANKARA İLE BAĞIN VAR MI?",
 "SAYISALCI MISIN?",
 "DERİ CEKETİN VAR MI?",
 "KEDİLERİ SEVER MİSİN?"
 ];
-let soruIndex = 0;
+
+let soruIndex=0;
+
+function emojiYagdir(emojiler, adet){
+    for(let i=0;i<adet;i++){
+        setTimeout(()=>{
+            const emoji=document.createElement("div");
+            emoji.classList.add("emoji");
+            emoji.innerText=emojiler[Math.floor(Math.random()*emojiler.length)];
+            emoji.style.left=Math.random()*100+"vw";
+            emoji.style.fontSize=(24+Math.random()*28)+"px";
+            document.body.appendChild(emoji);
+
+            setTimeout(()=>{
+                emoji.remove();
+            },2500);
+        },i*35);
+    }
+}
+
 function cevapla(cevap){
-    const soruDiv = document.getElementById("soru");
-    const mesajDiv = document.getElementById("mesaj");
-    const yenidenBasla = document.getElementById("yenidenBasla");
-    const evetBtn = document.querySelector(".evet");
-    const hayirBtn = document.querySelector(".hayir");
+    const soruDiv=document.getElementById("soru");
+    const yenidenBasla=document.getElementById("yenidenBasla");
+    const evetBtn=document.querySelector(".evet");
+    const hayirBtn=document.querySelector(".hayir");
+
     if(cevap==="hayir"){
         soruDiv.innerText="HAYIR.";
-        mesajDiv.innerText="";
         evetBtn.style.display="none";
         hayirBtn.style.display="none";
         yenidenBasla.style.display="inline-block";
+
+        emojiYagdir(["💔","😭","❌","🚫","🥀","😔"],60);
     }else{
+        emojiYagdir(["❤️","💕","💖","💘","😍"],25);
+
         soruIndex++;
+
         if(soruIndex===sorular.length){
-            soruDiv.innerText="EVET PINAR SENİNLE FLÖRTLEŞİR.";
-            mesajDiv.innerText="";
+            soruDiv.innerText="EVET PINAR SENİNLE FLÖRTLEŞİR ❤️";
             evetBtn.style.display="none";
             hayirBtn.style.display="none";
+
+            emojiYagdir(["❤️","💕","💖","💘","😍","💞","💓","🌸"],120);
         }else{
             soruDiv.innerText=sorular[soruIndex];
         }
     }
 }
+
 function yenidenBaslat(){
     soruIndex=0;
+
     document.getElementById("soru").innerText=sorular[0];
-    document.getElementById("mesaj").innerText="";
+
     document.querySelector(".evet").style.display="inline-block";
     document.querySelector(".hayir").style.display="inline-block";
     document.getElementById("yenidenBasla").style.display="none";
 }
 </script>
+
 </body>
 </html>
